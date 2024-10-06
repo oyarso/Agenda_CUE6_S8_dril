@@ -64,43 +64,42 @@ def widget_view(request):
     context['form'] = form 
     return render(request, "widget_home.html", context) 
 
-def registro_view(request): 
-    if request.method == "POST": 
-        form = RegistroUsuarioForm(request.POST) 
-        if form.is_valid(): 
-            user = form.save() 
-            login(request, user) 
-            messages.success(request, "Registrado Satisfactoriamente." ) 
+def registro_view(request):
+    if request.method == "POST":
+        form = RegistroUsuarioForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registrado Satisfactoriamente.")
+            return HttpResponseRedirect('/menu')
+        else:
+            messages.error(request, "Registro invalido. Algunos datos ingresados no son correctos.")
+    else:
+        form = RegistroUsuarioForm()
+        
+    return render(request=request, template_name="registration/registro.html", context={"register_form": form})
 
-        return HttpResponseRedirect('/menu')   
-    messages.error(request, "Registro invalido. Algunos datos ingresados no son correctos") 
-
-    form = RegistroUsuarioForm() 
-    return render (request=request, template_name="registration/registro.html", context={"register_form":form})
-
-
-def login_view(request): 
-    if request.method == "POST": 
-        form = AuthenticationForm(request, data=request.POST) 
-        if form.is_valid(): 
-            username = form.cleaned_data.get('username') 
-            password = form.cleaned_data.get('password') 
-            user = authenticate(username=username, password=password) 
-
+def login_view(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"Iniciaste sesión como: {username}.")
+                return HttpResponseRedirect('/menu')
+            else:
+                messages.error(request, "Invalido username o password.")
+        else:
+            messages.error(request, "Invalido username o password.")
+    else:
+        form = AuthenticationForm()
     
-            if user is not None: 
-                login(request, user) 
-                messages.info(request, f"Iniciaste sesión como: {username}.") 
-            return HttpResponseRedirect('/')  
-        else: 
-            messages.error(request,"Invalido username o password.") 
-    else: 
-        messages.error(request,"Invalido username o password.") 
-        form = AuthenticationForm() 
-    return render(request=request, template_name="registration/login.html", context={"login_form":form})
+    return render(request=request, template_name="registration/login.html", context={"login_form": form})
 
-
-def logout_view(request): 
-    logout(request) 
-    messages.info(request, "Se ha cerrado la sesión satisfactoriamente.")  
-    return HttpResponseRedirect('/')
+def logout_view(request):
+    logout(request)
+    messages.info(request, "Se ha cerrado la sesión satisfactoriamente.")
+    return HttpResponseRedirect('/menu')

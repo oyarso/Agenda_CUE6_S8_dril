@@ -1,5 +1,6 @@
-from django.urls import path 
-from .views import IndexPageView, menuView, mostrar, datosform_view, widget_view, boardsform_view, registro_view, login_view, logout_view
+from django.urls import path
+from .views import IndexPageView, menuView,logout_view, login_view, mostrar, datosform_view, widget_view, boardsform_view, registro_view
+
 urlpatterns = [ 
 path('', IndexPageView.as_view(), name='index'), 
 path('menu/',  menuView, name='menu'),     
