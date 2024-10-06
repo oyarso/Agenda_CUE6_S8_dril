@@ -4,7 +4,7 @@ from .views import IndexPageView, menuView,logout_view, login_view, mostrar, dat
 urlpatterns = [ 
 path('', IndexPageView.as_view(), name='index'), 
 path('menu/',  menuView, name='menu'),     
-path('listbook/', mostrar, name='listbook'),
+path('book/', mostrar, name='book'),
 
 path('login/', login_view, name="login"), 
 path('mostrar/',  mostrar, name='mostrar'), 

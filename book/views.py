@@ -79,6 +79,7 @@ def registro_view(request):
         
     return render(request=request, template_name="registration/registro.html", context={"register_form": form})
 
+
 def login_view(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -98,6 +99,7 @@ def login_view(request):
         form = AuthenticationForm()
     
     return render(request=request, template_name="registration/login.html", context={"login_form": form})
+
 
 def logout_view(request):
     logout(request)

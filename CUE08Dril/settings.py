@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'listbook.apps.ListbookConfig',
+    'book.apps.BookConfig',
     'bootstrap5',
     'crispy_forms',
     'crispy_bootstrap4',
